@@ -20,3 +20,10 @@ function updateDashboard(){
     document.getElementById("rejectedCount").innerText = jobs.filter(j=>j.status==="rejected").length;
 }
 
+function getBadge(status){
+    if(status === "applied") return `<span class = "px-3 py-1 text-xs bg-blue-500 text-white rounded">APPLIED</span>`;
+    if(status === "interview") return `<span class = "px-3 py-1 text-xs bg-green-500 text-white rounded">INTERVIEW</span>`;
+    if(status === "rejected") return `<span class = "px-3 py-1 text-xs bg-red-500 text-white rounded">REJECTED</span>`;
+    return `<span class = "px-3 py-1 text-xs bg-[#EEF4FF] text-white rounded">NOT APPLIED</span>`;
+}
+
