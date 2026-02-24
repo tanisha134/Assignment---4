@@ -27,3 +27,48 @@ function getBadge(status){
     return `<span class = "px-3 py-1 text-xs bg-[#EEF4FF] text-white rounded">NOT APPLIED</span>`;
 }
 
+function renderJobs(){
+    container.innerHTML ="";
+
+    const filtered = jobs.filter(job=>{
+        if(currentTab === "all") return true;
+        return job.status === currentTab;
+    });
+
+    document.getElementById("sectionCount").innerText = filtered.length;
+
+    if(filtered.length===0){
+        emptyMassage.classList.remove("hidden");
+    }
+    else{
+        emptyMassage.classList.add("hidden");
+    }
+
+    filtered.forEach(job=>{
+        const card = document.createElement("div");
+        card.className = "bg-white p-6 rounded shadow relative border";
+
+        card.innerHTML=`
+            <button class = "delete-btn text-[#64748B] delete-btn absolute top-4 right-4 bg-white border border-[#64748B] rounded-full w-8 h-8 flex items-center justify-center shadow-sm hover:bg-gray-200 transition duration-200"" data-id="${job.id}"><i class="fa-regular fa-trash-can"></i> </button>
+            <div class = "flex justify-between items-center pr-8">
+                <h3 class = "text-lg font-bold">${job.company}</h3>
+                ${getBadge(job.status)}
+            </div>
+            <p class = "text-sm text-[#323B49]">${job.position}</p>
+            <p class = "text-sm text-[#64748B]">${job.position} • ${job.type} • ${job.salary}</p>
+            <p class = "mt-3 text-sm text-[#64748B]">${job.description}</p>
+
+
+            <div class= "flex gap-2 mt-4">
+                <button class= "status-btn bg-[#F8FAFC] px-3 py-2 text-sm rounded" data-status="applied" data-id="${job.id}">Apply</button>
+
+                <button class= "status-btn bg-[#F8FAFC] px-3 py-2 text-sm rounded" data-status="interview" data-id="${job.id}">Interview</button>
+
+                <button class= "status-btn bg-[#F8FAFC] px-3 py-2 text-sm rounded" data-status="rejected" data-id="${job.id}">Reject</button>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+    updateDashboard();
+}
